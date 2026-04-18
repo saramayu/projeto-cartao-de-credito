@@ -10,7 +10,35 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <div class="app">
+  <div class="auth-gate" id="authGate" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="auth-card">
+      <div class="auth-card__brand">
+        <span class="auth-card__logo" aria-hidden="true"></span>
+        <span class="auth-card__name">FinDash</span>
+      </div>
+      <h1 class="auth-card__title" id="authTitle">Acesso ao dashboard</h1>
+      <p class="auth-card__subtitle">Digite a senha para continuar.</p>
+      <form class="auth-form" id="authForm" autocomplete="off" novalidate>
+        <label class="auth-label" for="authPassword">Senha</label>
+        <input
+          class="auth-input"
+          type="password"
+          id="authPassword"
+          name="password"
+          inputmode="numeric"
+          maxlength="32"
+          required
+          placeholder="••••"
+          aria-describedby="authError"
+          autofocus
+        />
+        <p class="auth-error" id="authError" role="alert" hidden>Senha incorreta. Tente novamente.</p>
+        <button type="submit" class="btn btn--primary auth-submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="app app--locked" id="appRoot" aria-hidden="true">
     <aside class="sidebar" aria-label="Navegação principal">
       <div class="sidebar__brand">
         <span class="sidebar__logo" aria-hidden="true"></span>
@@ -67,17 +95,17 @@
         <section class="kpi-grid" aria-label="Indicadores">
           <article class="kpi kpi--hero" data-kpi="total">
             <span class="kpi__label">Total da fatura</span>
-            <span class="kpi__value" id="kpiTotal">R$ 2.433,00</span>
+            <span class="kpi__value" id="kpiTotal">—</span>
             <span class="kpi__meta">Período atual</span>
           </article>
           <article class="kpi" data-kpi="count">
             <span class="kpi__label">Lançamentos</span>
-            <span class="kpi__value" id="kpiCount">20</span>
+            <span class="kpi__value" id="kpiCount">—</span>
             <span class="kpi__meta" id="kpiCountMeta">Transações no período</span>
           </article>
           <article class="kpi" data-kpi="avg">
             <span class="kpi__label">Ticket médio</span>
-            <span class="kpi__value" id="kpiAvg">R$ 121,65</span>
+            <span class="kpi__value" id="kpiAvg">—</span>
             <span class="kpi__meta">Valor médio por lançamento</span>
           </article>
         </section>
@@ -88,7 +116,7 @@
               <h2 class="card__title">Gastos por categoria</h2>
               <span class="card__hint">Clique em uma barra para filtrar</span>
             </div>
-            <div class="chart-wrap">
+            <div class="chart-wrap" id="chartCategoriesWrap">
               <canvas id="chartCategories" aria-label="Gráfico de barras horizontais por categoria"></canvas>
             </div>
           </div>
@@ -106,7 +134,7 @@
         <section class="card table-card" data-animate>
           <div class="card__head card__head--table">
             <h2 class="card__title">Transações</h2>
-            <span class="badge badge--transactions" id="tableBadge">20 lançamentos</span>
+            <span class="badge badge--transactions" id="tableBadge">—</span>
           </div>
           <div class="table-scroll">
             <table class="data-table">
@@ -133,6 +161,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
