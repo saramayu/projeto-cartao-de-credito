@@ -488,6 +488,21 @@ body {
   animation-delay: 0.12s;
 }
 
+/* Gráficos: não usar opacity:0 no container — o Chart.js mede 0×0 e o canvas fica em branco */
+.card.card--chart[data-animate] {
+  opacity: 1;
+  animation-name: cardEnterChart;
+}
+
+@keyframes cardEnterChart {
+  from {
+    transform: translateY(12px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 .table-card[data-animate] {
   animation-delay: 0.18s;
 }
@@ -525,11 +540,13 @@ body {
 
 .chart-wrap {
   position: relative;
+  width: 100%;
+  min-height: 220px;
   height: 280px;
 }
 
 .chart-wrap--line {
-  height: 260px;
+  height: 280px;
 }
 
 /* Table */

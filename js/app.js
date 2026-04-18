@@ -114,19 +114,34 @@
     return { labels, data };
   }
 
-  function dailySeries(rows) {
+  /** Todos os dias entre a primeira e a última data (inclusive), com 0 nos dias sem gasto — melhor leitura no eixo X */
+  function dailySeriesContinuous(rows) {
+    if (!rows.length) {
+      return { labels: ["—"], data: [0] };
+    }
+    const sorted = rows.slice().sort((a, b) => (a.date < b.date ? -1 : 1));
+    const minIso = sorted[0].date;
+    const maxIso = sorted[sorted.length - 1].date;
     const byDay = {};
     rows.forEach((r) => {
       byDay[r.date] = (byDay[r.date] || 0) + r.value;
     });
-    const dates = Object.keys(byDay).sort();
-    return {
-      labels: dates.map((d) => {
-        const x = new Date(d + "T12:00:00");
-        return x.toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
-      }),
-      data: dates.map((d) => byDay[d]),
-    };
+    const labels = [];
+    const data = [];
+    const cur = new Date(minIso + "T12:00:00");
+    const end = new Date(maxIso + "T12:00:00");
+    while (cur <= end) {
+      const y = cur.getFullYear();
+      const m = String(cur.getMonth() + 1).padStart(2, "0");
+      const day = String(cur.getDate()).padStart(2, "0");
+      const iso = `${y}-${m}-${day}`;
+      labels.push(
+        cur.toLocaleDateString("pt-BR", { day: "2-digit", month: "short" })
+      );
+      data.push(byDay[iso] || 0);
+      cur.setDate(cur.getDate() + 1);
+    }
+    return { labels, data };
   }
 
   function pulseKpis() {
@@ -189,8 +204,10 @@
   }
 
   function lineChartGradient(ctx) {
-    const g = ctx.createLinearGradient(0, 0, 0, 260);
-    g.addColorStop(0, "rgba(94, 184, 138, 0.45)");
+    const h = ctx.canvas?.height || 280;
+    const g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, "rgba(94, 184, 138, 0.38)");
+    g.addColorStop(0.55, "rgba(94, 184, 138, 0.12)");
     g.addColorStop(1, "rgba(94, 184, 138, 0)");
     return g;
   }
@@ -198,7 +215,7 @@
   function updateCharts() {
     const catData = aggregateByCategory(MOCK_TRANSACTIONS);
     const lineRows = getDisplayRows();
-    const line = dailySeries(lineRows);
+    const line = dailySeriesContinuous(lineRows);
 
     if (barChart) {
       barChart.data.labels = catData.labels;
@@ -299,7 +316,7 @@
 
   function initLineChart() {
     const ctx = document.getElementById("chartLine");
-    const line = dailySeries(MOCK_TRANSACTIONS);
+    const line = dailySeriesContinuous(MOCK_TRANSACTIONS);
 
     lineChart = new Chart(ctx, {
       type: "line",
@@ -310,11 +327,13 @@
             label: "Total diário",
             data: line.data,
             borderColor: "#145239",
+            borderWidth: 2.5,
             backgroundColor: lineChartGradient(ctx),
-            fill: true,
-            tension: 0.4,
-            pointRadius: 4,
-            pointHoverRadius: 7,
+            fill: "origin",
+            cubicInterpolationMode: "monotone",
+            spanGaps: false,
+            pointRadius: 3,
+            pointHoverRadius: 8,
             pointBackgroundColor: "#fff",
             pointBorderColor: "#145239",
             pointBorderWidth: 2,
@@ -324,8 +343,9 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        layout: { padding: { top: 8, right: 4, left: 0, bottom: 0 } },
         animation: {
-          duration: 1100,
+          duration: 1200,
           easing: "easeOutQuart",
         },
         interaction: { mode: "index", intersect: false },
@@ -342,12 +362,25 @@
         },
         scales: {
           x: {
+            offset: true,
             grid: { display: false },
-            ticks: { maxRotation: 45, minRotation: 0 },
+            ticks: {
+              maxRotation: 45,
+              minRotation: 0,
+              autoSkip: true,
+              maxTicksLimit: 12,
+              font: { size: 11, weight: "500" },
+              color: "#5c6560",
+            },
           },
           y: {
+            beginAtZero: true,
+            suggestedMax: undefined,
             grid: { color: "rgba(20, 82, 57, 0.08)" },
+            border: { display: false },
             ticks: {
+              font: { size: 11, weight: "500" },
+              color: "#5c6560",
               callback: (v) =>
                 Number(v).toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }),
             },
@@ -377,4 +410,21 @@
   initBarChart();
   initLineChart();
   refresh();
+
+  function resizeCharts() {
+    if (barChart) barChart.resize();
+    if (lineChart) lineChart.resize();
+  }
+
+  window.addEventListener("load", () => {
+    resizeCharts();
+    if (lineChart) {
+      lineChart.data.datasets[0].backgroundColor = lineChartGradient(lineChart.canvas);
+      lineChart.update();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    resizeCharts();
+  });
 })();

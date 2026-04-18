@@ -67,7 +67,7 @@
         <section class="kpi-grid" aria-label="Indicadores">
           <article class="kpi kpi--hero" data-kpi="total">
             <span class="kpi__label">Total da fatura</span>
-            <span class="kpi__value" id="kpiTotal">R$ 2.844,04</span>
+            <span class="kpi__value" id="kpiTotal">R$ 2.433,00</span>
             <span class="kpi__meta">Período atual</span>
           </article>
           <article class="kpi" data-kpi="count">
@@ -77,7 +77,7 @@
           </article>
           <article class="kpi" data-kpi="avg">
             <span class="kpi__label">Ticket médio</span>
-            <span class="kpi__value" id="kpiAvg">R$ 142,20</span>
+            <span class="kpi__value" id="kpiAvg">R$ 121,65</span>
             <span class="kpi__meta">Valor médio por lançamento</span>
           </article>
         </section>
@@ -106,16 +106,22 @@
         <section class="card table-card" data-animate>
           <div class="card__head card__head--table">
             <h2 class="card__title">Transações</h2>
-            <span class="badge" id="tableBadge">20 lançamentos</span>
+            <span class="badge badge--transactions" id="tableBadge">20 lançamentos</span>
           </div>
           <div class="table-scroll">
             <table class="data-table">
+              <colgroup>
+                <col class="data-table__col data-table__col--date" />
+                <col class="data-table__col data-table__col--value" />
+                <col class="data-table__col data-table__col--desc" />
+                <col class="data-table__col data-table__col--cat" />
+              </colgroup>
               <thead>
                 <tr>
-                  <th>Data</th>
-                  <th>Valor</th>
-                  <th>Descrição</th>
-                  <th>Categoria</th>
+                  <th scope="col">Data</th>
+                  <th scope="col">Valor</th>
+                  <th scope="col">Descrição</th>
+                  <th scope="col">Categoria</th>
                 </tr>
               </thead>
               <tbody id="transactionsBody"></tbody>
