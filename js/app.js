@@ -12,26 +12,26 @@
   };
 
   const MOCK_TRANSACTIONS = [
-    { date: "2026-04-01", value: 89.9, description: "Supermercado Semanal", category: "Alimentação" },
-    { date: "2026-04-02", value: 42.5, description: "Uber para reunião", category: "Transporte" },
-    { date: "2026-04-02", value: 120.0, description: "Farmácia", category: "Saúde" },
-    { date: "2026-04-03", value: 35.0, description: "Cinema", category: "Lazer" },
-    { date: "2026-04-04", value: 39.9, description: "Streaming + música", category: "Assinaturas" },
-    { date: "2026-04-05", value: 210.45, description: "Material de limpeza", category: "Casa" },
-    { date: "2026-04-06", value: 67.2, description: "Padaria e lanches", category: "Alimentação" },
-    { date: "2026-04-07", value: 499.0, description: "Curso online", category: "Educação" },
-    { date: "2026-04-08", value: 28.0, description: "Metrô e ônibus", category: "Transporte" },
-    { date: "2026-04-09", value: 156.8, description: "Restaurante", category: "Alimentação" },
-    { date: "2026-04-10", value: 75.0, description: "Academia", category: "Saúde" },
-    { date: "2026-04-11", value: 182.3, description: "Presente aniversário", category: "Lazer" },
-    { date: "2026-04-12", value: 14.99, description: "App de leitura", category: "Assinaturas" },
-    { date: "2026-04-13", value: 320.0, description: "Manutenção elétrica", category: "Casa" },
-    { date: "2026-04-14", value: 54.6, description: "Almoço trabalho", category: "Alimentação" },
-    { date: "2026-04-15", value: 95.0, description: "Combustível", category: "Transporte" },
-    { date: "2026-04-16", value: 250.0, description: "Consulta médica", category: "Saúde" },
-    { date: "2026-04-17", value: 63.4, description: "Livros", category: "Educação" },
-    { date: "2026-04-18", value: 412.0, description: "Supermercado família", category: "Alimentação" },
-    { date: "2026-04-18", value: 88.0, description: "Teatro", category: "Lazer" },
+    { date: "2026-04-01", value: 215.3, description: "Pão de Açúcar — despensa da semana", category: "Alimentação" },
+    { date: "2026-04-02", value: 45.0, description: "Uber — viagem à reunião", category: "Transporte" },
+    { date: "2026-04-02", value: 89.9, description: "Drogaria São Paulo", category: "Saúde" },
+    { date: "2026-04-03", value: 52.0, description: "Ingresso cinema multiplex", category: "Lazer" },
+    { date: "2026-04-04", value: 59.9, description: "Netflix + Spotify", category: "Assinaturas" },
+    { date: "2026-04-05", value: 178.4, description: "Leroy Merlin — reforma banheiro", category: "Casa" },
+    { date: "2026-04-06", value: 33.5, description: "Padaria Central", category: "Alimentação" },
+    { date: "2026-04-07", value: 349.0, description: "Mensalidade curso de idiomas", category: "Educação" },
+    { date: "2026-04-08", value: 72.0, description: "Posto Shell — combustível", category: "Transporte" },
+    { date: "2026-04-09", value: 128.4, description: "iFood — jantar fim de semana", category: "Alimentação" },
+    { date: "2026-04-10", value: 220.0, description: "Plano saúde coparticipação", category: "Saúde" },
+    { date: "2026-04-11", value: 95.0, description: "Bar e petiscos com amigos", category: "Lazer" },
+    { date: "2026-04-12", value: 19.9, description: "Assinatura Notion", category: "Assinaturas" },
+    { date: "2026-04-13", value: 45.6, description: "Conta de luz (rateio condomínio)", category: "Casa" },
+    { date: "2026-04-14", value: 386.2, description: "Atacadão — compras do mês", category: "Alimentação" },
+    { date: "2026-04-15", value: 16.4, description: "Estacionamento shopping", category: "Transporte" },
+    { date: "2026-04-16", value: 65.0, description: "Farmácia — antialérgico e vitamina", category: "Saúde" },
+    { date: "2026-04-17", value: 127.0, description: "Livro técnico — Amazon", category: "Educação" },
+    { date: "2026-04-18", value: 94.5, description: "Açougue e hortifruti", category: "Alimentação" },
+    { date: "2026-04-18", value: 140.0, description: "Show ao vivo", category: "Lazer" },
   ];
 
   let activeCategory = null;
@@ -184,7 +184,7 @@
       tr.innerHTML = `
         <td class="cell-date">${formatDate(row.date)}</td>
         <td class="cell-value">${formatMoney(row.value)}</td>
-        <td>${escapeHtml(row.description)}</td>
+        <td class="cell-desc">${escapeHtml(row.description)}</td>
         <td><span class="cat-pill" style="--pill-bg:${colors.pillBg};--pill-fg:${colors.pill}">${escapeHtml(row.category)}</span></td>
       `;
       els.tbody.appendChild(tr);

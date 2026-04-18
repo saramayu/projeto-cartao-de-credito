@@ -524,7 +524,9 @@ body {
 }
 
 .card__head--table {
-  margin-bottom: 0.85rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.15rem;
 }
 
 .card__title {
@@ -551,35 +553,65 @@ body {
 
 /* Table */
 .table-card {
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.65rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(13, 59, 44, 0.06);
 }
 
 .table-scroll {
   overflow-x: auto;
   margin: 0 -1.35rem;
   padding: 0 1.35rem 0.5rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 .data-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 0.9rem;
 }
 
+.data-table__col--date {
+  width: 15%;
+}
+
+.data-table__col--value {
+  width: 14%;
+}
+
+.data-table__col--desc {
+  width: 46%;
+}
+
+.data-table__col--cat {
+  width: 25%;
+}
+
 .data-table th {
   text-align: left;
-  padding: 0.85rem 1rem;
+  padding: 0.65rem 0.85rem 0.75rem;
   color: var(--text-muted);
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid rgba(20, 82, 57, 0.1);
   white-space: nowrap;
 }
 
+.data-table th:first-child,
+.data-table td:first-child {
+  padding-left: 0.25rem;
+}
+
+.data-table th:last-child,
+.data-table td:last-child {
+  padding-right: 0.25rem;
+}
+
 .data-table td {
-  padding: 1rem 1rem;
+  padding: 0.95rem 0.85rem;
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
 }
@@ -627,6 +659,12 @@ body {
   color: var(--green-950);
 }
 
+.data-table .cell-desc {
+  color: var(--text);
+  line-height: 1.45;
+  word-wrap: break-word;
+}
+
 .badge {
   display: inline-block;
   padding: 0.25rem 0.65rem;
@@ -635,6 +673,15 @@ body {
   font-weight: 600;
   background: rgba(20, 82, 57, 0.1);
   color: var(--green-900);
+}
+
+.badge--transactions {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  background: #eceeec;
+  color: var(--green-900);
+  border: 1px solid rgba(20, 82, 57, 0.08);
 }
 
 .cat-pill {
@@ -703,6 +750,18 @@ body {
 
   .chart-wrap {
     height: 240px;
+  }
+
+  .data-table__col--date,
+  .data-table__col--value,
+  .data-table__col--desc,
+  .data-table__col--cat {
+    width: auto;
+  }
+
+  .data-table {
+    table-layout: auto;
+    min-width: 520px;
   }
 }
 
