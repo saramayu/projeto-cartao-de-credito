@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Cartão de Crédito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <div class="sidebar__brand">
+        <span class="sidebar__logo" aria-hidden="true"></span>
+        <span class="sidebar__title">FinDash</span>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="sidebar__link sidebar__link--active" href="#"><span class="sidebar__indicator"></span>Dashboard</a>
+        <a class="sidebar__link" href="#">Transações</a>
+        <a class="sidebar__link" href="#">Categorias</a>
+        <a class="sidebar__link" href="#">Relatórios</a>
+        <a class="sidebar__link" href="#">Configurações</a>
+      </nav>
+      <div class="sidebar__cta">
+        <p class="sidebar__cta-text">Exporte seus dados em CSV ou PDF.</p>
+        <button type="button" class="btn btn--light btn--sm">Download</button>
+      </div>
+    </aside>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <div class="topbar__search" role="search">
+          <span class="topbar__search-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </span>
+          <input type="search" class="topbar__input" placeholder="Buscar transações…" autocomplete="off" id="searchInput" />
+          <kbd class="topbar__kbd">Ctrl + K</kbd>
+        </div>
+        <div class="topbar__actions">
+          <button type="button" class="icon-btn" aria-label="Notificações"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+          <div class="topbar__user">
+            <span class="topbar__avatar" aria-hidden="true">A</span>
+            <div class="topbar__user-text">
+              <span class="topbar__name">Ana Silva</span>
+              <span class="topbar__email">ana@email.com</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="page-head">
+          <div>
+            <h1 class="page-head__title">Dashboard</h1>
+            <p class="page-head__subtitle">Visão geral da sua fatura e gastos por categoria</p>
+          </div>
+          <div class="page-head__buttons">
+            <button type="button" class="btn btn--ghost" id="btnClearFilter">Limpar filtro</button>
+            <button type="button" class="btn btn--primary">+ Nova transação</button>
+          </div>
+        </div>
+
+        <p class="filter-hint" id="filterHint" hidden></p>
+
+        <section class="kpi-grid" aria-label="Indicadores">
+          <article class="kpi kpi--hero" data-kpi="total">
+            <span class="kpi__label">Total da fatura</span>
+            <span class="kpi__value" id="kpiTotal">R$ 0,00</span>
+            <span class="kpi__meta">Período atual</span>
+          </article>
+          <article class="kpi" data-kpi="count">
+            <span class="kpi__label">Lançamentos</span>
+            <span class="kpi__value" id="kpiCount">0</span>
+            <span class="kpi__meta" id="kpiCountMeta">Transações no período</span>
+          </article>
+          <article class="kpi" data-kpi="avg">
+            <span class="kpi__label">Ticket médio</span>
+            <span class="kpi__value" id="kpiAvg">R$ 0,00</span>
+            <span class="kpi__meta">Valor médio por lançamento</span>
+          </article>
+        </section>
+
+        <section class="charts-grid">
+          <div class="card card--chart" data-animate>
+            <div class="card__head">
+              <h2 class="card__title">Gastos por categoria</h2>
+              <span class="card__hint">Clique em uma barra para filtrar</span>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chartCategories" aria-label="Gráfico de barras horizontais por categoria"></canvas>
+            </div>
+          </div>
+          <div class="card card--chart" data-animate>
+            <div class="card__head">
+              <h2 class="card__title">Evolução diária</h2>
+              <span class="card__hint">Soma dos valores por dia</span>
+            </div>
+            <div class="chart-wrap chart-wrap--line">
+              <canvas id="chartLine" aria-label="Gráfico de linhas da evolução"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <section class="card table-card" data-animate>
+          <div class="card__head card__head--table">
+            <h2 class="card__title">Transações</h2>
+            <span class="badge" id="tableBadge">20 lançamentos</span>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Valor</th>
+                  <th>Descrição</th>
+                  <th>Categoria</th>
+                </tr>
+              </thead>
+              <tbody id="transactionsBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
